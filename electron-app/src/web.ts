@@ -3,13 +3,30 @@ import path from "path";
 import fs from "fs";
 import axios from "axios";
 
+/*
+ * This file contains functions for loading modules from local and remote
+ * repositories.
+ *
+ * The main function is GetModulesList, which takes a list of repository urls
+ * and returns a contatenated list of modules.
+ *
+ * repo: A dictionary containing the repository url and type
+ *       type: "local" | "github",
+ *       listing_type: "DirectoryListing" | "BranchListing",
+ *       repo: <url>, e.g. "user/repo" or "/path/to/repo"
+ *
+ */
+
 const load_config = false;
 
 const GetModuleConfig = async (
   repo: Record<string, unknown>,
   snakefile: Record<string, unknown> | string
 ) => {
-  /* Returns both the config file, and the workflow docstring, if it exists */
+  /*
+   * Returns both the config file, and the workflow docstring, if it exists
+   */
+
   const config = (await GetModuleConfigFile(repo, snakefile)) as Record<
     string,
     unknown
@@ -22,6 +39,9 @@ const GetModuleConfigFile = async (
   repo: Record<string, unknown>,
   snakefile: Record<string, unknown> | string
 ) => {
+  /*
+   * Returns the config file
+   */
   console.log("GetModuleConfig: ", repo);
   let workflow_url = "";
   let config_url = "";
@@ -76,6 +96,10 @@ const GetModuleDocstring = async (
   repo: Record<string, unknown>,
   snakefile: Record<string, unknown> | string
 ) => {
+  /*
+   * Returns the module docstring
+   */
+
   console.log("GetModuleConfig: ", repo);
   let workflow_url = "";
   let snakefile_str = "";
@@ -116,6 +140,7 @@ const ParseDocstring = (snakefile: string): string => {
   /*
    * Parse docstring from workflow file contents
    */
+
   let docstring = "";
   const lines = snakefile.split("\n");
   // docstring must be at the top of the file
@@ -136,6 +161,10 @@ const ParseDocstring = (snakefile: string): string => {
 const GetModulesList = async (
   url: Record<string, unknown> | Record<string, unknown>[]
 ): Promise<Array<Record<string, unknown>>> => {
+  /*
+   * Returns a list of modules from a repository url
+   */
+
   // Process multiple urls if input is an array
   if (Array.isArray(url)) {
     console.log("GetModulesList (parsing repository list): ", url);
@@ -161,6 +190,9 @@ const GetModulesList = async (
 };
 
 const GetFolders = (root_folder: string): Array<string> =>
+  /*
+   * Returns a list of folders in a directory
+   */
   fs
     .readdirSync(root_folder, { withFileTypes: true })
     .filter((f) => f.isDirectory())
@@ -169,6 +201,10 @@ const GetFolders = (root_folder: string): Array<string> =>
 const GetLocalModules = (
   root_folder: string
 ): Array<Record<string, unknown>> => {
+  /*
+   * Returns a list of modules from a local repository
+   */
+  
   // static return for now
   const path_base = path.join(path.resolve(root_folder), "workflows");
 
@@ -234,6 +270,10 @@ const GetRemoteModulesGithub = async (
   repo: string,
   listing_type: string
 ): Promise<Record<string, unknown>[]> => {
+  /*
+   * Returns a list of modules from a remote github repository
+   */
+  
   switch (listing_type) {
     case "DirectoryListing":
       return GetRemoteModulesGithubDirectoryListing(repo);
@@ -247,6 +287,10 @@ const GetRemoteModulesGithub = async (
 const GetRemoteModulesGithubDirectoryListing = async (
   repo: string
 ): Promise<Record<string, unknown>[]> => {
+  /*
+   * Returns a list of modules from a remote github repository
+   */
+  
   const url_github = "https://api.github.com/repos";
   const url_base: string = path.join(url_github, repo, "contents/workflows");
   const branch = "main";
@@ -336,6 +380,10 @@ const GetRemoteModulesGithubDirectoryListing = async (
 const GetRemoteModulesGithubBranchListing = async (
   repo: string
 ): Promise<Record<string, unknown>[]> => {
+  /*
+   * Returns a list of modules from a remote github repository
+   */
+
   const url_github = "https://api.github.com/repos";
   const url_base = path.join(url_github, repo, "branches");
   const modules: Array<Record<string, unknown>> = [];
@@ -405,10 +453,18 @@ const GetRemoteModulesGithubBranchListing = async (
 };
 
 const FormatName = (name: string): string => {
+  /*
+   * Format module name
+   */
+
   return name;
 };
 
 const GetModuleClassification = (config: Record<string, unknown>): string => {
+  /*
+   * Returns the module classification based on the config file
+   */
+  
   // If config is None, then default to module
   if (config === null || config === undefined) {
     return "module";
@@ -422,14 +478,21 @@ const GetModuleClassification = (config: Record<string, unknown>): string => {
   return "module";
 };
 
+// TODO: Refactor test script so that we do not need to export all of these functions
+
 export {
   GetModuleConfig,
   GetModuleConfigFile,
   GetModuleDocstring,
   ParseDocstring,
   GetLocalModules,
+  GetFolders,
   GetModulesList,
+  GetRemoteModulesGithub,
   GetRemoteModulesGithubDirectoryListing,
+  GetRemoteModulesGithubBranchListing,
+  FormatName,
+  GetModuleClassification,
 };
 module.exports = {
   GetModuleConfig,
@@ -437,7 +500,12 @@ module.exports = {
   GetModuleDocstring,
   ParseDocstring,
   GetLocalModules,
+  GetFolders,
   GetModulesList,
+  GetRemoteModulesGithub,
   GetRemoteModulesGithubDirectoryListing,
+  GetRemoteModulesGithubBranchListing,
+  FormatName,
+  GetModuleClassification,
 };
 export default module.exports;
