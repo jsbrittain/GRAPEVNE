@@ -7,6 +7,8 @@ import { useAppSelector } from "redux/store/hooks";
 
 import { displayUpdateNodeInfo } from "redux/actions";
 
+import { builderSetNodes } from "redux/actions";
+import { builderSetEdges } from "redux/actions";
 import { builderLoadNodemap } from "redux/actions";
 import { builderSaveNodemap } from "redux/actions";
 import { builderBuildAndRun } from "redux/actions";
@@ -36,9 +38,10 @@ const Header = () => {
 
   // Load nodemap from file
   const btnClearScene = () => {
-    BuilderEngine.Instance.ClearScene();
-    //dispatch(displayUpdateNodeInfo(""));
-    dispatch(builderNodeDeselected(""));
+    //BuilderEngine.Instance.ClearScene();
+    dispatch(builderNodeDeselected());
+    dispatch(builderSetNodes([]));
+    dispatch(builderSetEdges([]));
   };
 
   // Run - build and run the workflow
@@ -61,19 +64,9 @@ const Header = () => {
     dispatch(builderBuildAsWorkflow());
   };
 
-  // Distribute model (visual)
-  const btnArrange = () => {
-    BuilderEngine.Instance.RedistributeModel();
-  };
-
   // Load modules from repository
   const btnGetModuleList = () => {
     dispatch(builderGetRemoteModules());
-  };
-
-  // Open settings pane
-  const btnSettings = () => {
-    dispatch(builderToggleSettingsVisibility());
   };
 
   return (
@@ -110,7 +103,14 @@ const Header = () => {
           SAVE
         </button>
         */}
-        GRAPEVNE
+        <button
+          id="btnBuilderGetModuleList"
+          className="btn"
+          onClick={btnGetModuleList}
+        >
+          GET MODULE LIST
+        </button>
+        |
         <button id="btnBuilderBuildAndTest" className="btn" onClick={btnRun}>
           TEST BUILD
         </button>
@@ -142,24 +142,6 @@ const Header = () => {
           onClick={btnClearScene}
         >
           CLEAR GRAPH
-        </button>
-        <button
-          id="btnBuilderArrangeGraph"
-          className="btn"
-          onClick={btnArrange}
-        >
-          ARRANGE GRAPH
-        </button>
-        |
-        <button
-          id="btnBuilderGetModuleList"
-          className="btn"
-          onClick={btnGetModuleList}
-        >
-          GET MODULE LIST
-        </button>
-        <button id="btnBuilderSettings" className="btn" onClick={btnSettings}>
-          SETTINGS
         </button>
       </div>
     </>
