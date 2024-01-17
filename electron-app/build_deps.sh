@@ -22,13 +22,6 @@ python -m pip install pyinstaller
 python -m PyInstaller src/python/pyrunner.py \
     --hidden-import builder \
     --hidden-import runner \
-    --hidden-import smart_open.ftp \
-    --hidden-import smart_open.gcs \
-    --hidden-import smart_open.hdfs \
-    --hidden-import smart_open.http \
-    --hidden-import smart_open.s3 \
-    --hidden-import smart_open.ssh \
-    --hidden-import smart_open.webhdfs \
     --add-data "src/python/Dockerfile:." \
     --add-data "src/python/run_docker_sh:."
 

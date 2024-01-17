@@ -8,7 +8,7 @@ params = config["params"]
 
 rule copy:
     input:
-        srcdir("../resources/file"),
+        workflow.source_path("../resources/file"),
     output:
         expand(
             "results/{outdir}/{filename}",
