@@ -8,21 +8,23 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install python 3.11 (required for snakemake 8.2)
-RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository -y ppa:deadsnakes/ppa && \
-    apt-get update && \
-    apt install -y python3.11
-
 # Set-up conda
 COPY --from=conda /opt/conda /opt/conda
 ENV PATH="/opt/conda/bin:${PATH}"
 RUN conda config --set channel_priority strict
 
+# Install python 3.11 (required for snakemake 8.2)
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:deadsnakes/ppa && \
+    apt-get update && \
+    apt install -y python3.11 && \
+    apt install -y python3.11-dev && \
+    apt install -y python3-pip
+
 # Install snakemake
 RUN python3.11 -m pip install --upgrade pip && \
-    python3.11 -m pip install snakemake==8.2
+    python3.11 -m pip install snakemake==8.4
 
 # Pass UID to container (ensures appropriate permissions for created files/directories)
 ARG HOST_UID
@@ -35,7 +37,7 @@ WORKDIR /home/user/workflow
 
 # Set-up the workflow conda environments
 ENV TERM=xterm-color
-RUN snakemake3.11 --conda-create-envs-only --use-conda --cores 1 $(snakemake --list)
+RUN snakemake --conda-create-envs-only --use-conda --cores 1 
 
 # Run the workflow script
 CMD ["bash", "-i", "-c", "./run.sh"]

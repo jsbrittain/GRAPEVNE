@@ -16,9 +16,11 @@ docker build \
 # Ensure mounted directories exist before mount (consistent permissions in the container)
 mkdir -p "${SCRIPT_DIR}"/results
 mkdir -p "${SCRIPT_DIR}"/benchmark
+mkdir -p "${SCRIPT_DIR}"/logs
 
 # Launch image
 docker run \
     -v "${SCRIPT_DIR}"/results:/home/user/workflow/results \
     -v "${SCRIPT_DIR}"/benchmark:/home/user/workflow/benchmark \
+    -v "${SCRIPT_DIR}"/benchmark:/home/user/workflow/logs \
     "${NAME}"

@@ -34,7 +34,7 @@ reretry==0.11.8
 rpds-py==0.17.1
 smart-open==6.4.0
 smmap==5.0.1
-snakemake==8.2.0
+snakemake==8.4
 snakemake-interface-common==1.15.1
 snakemake-interface-executor-plugins==8.2.0
 snakemake-interface-storage-plugins==3.0.0
