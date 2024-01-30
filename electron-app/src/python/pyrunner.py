@@ -7,6 +7,7 @@ import tempfile
 from typing import List
 from zipfile import ZipFile
 from zipfile import ZipInfo
+from typing import List
 
 import filesystem
 import snakemake
