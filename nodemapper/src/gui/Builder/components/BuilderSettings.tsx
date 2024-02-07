@@ -47,9 +47,6 @@ const BuilderSettings = () => {
   const package_modules_in_workflow = useAppSelector(
     (state) => state.builder.package_modules_in_workflow,
   );
-  const package_modules_in_workflow = useAppSelector(
-    (state) => state.builder.package_modules_in_workflow
-  );
 
   const SetSnakemakeArgs = (args: string) =>
     dispatch(builderSetSnakemakeArgs(args));

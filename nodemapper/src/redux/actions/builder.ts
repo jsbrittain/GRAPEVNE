@@ -20,9 +20,6 @@ export const builderToggleAutoValidateConnections = createAction(
 export const builderSetPackageModulesInWorkflow = createAction<boolean>(
   "builder/set-package-modules-in-workflow",
 );
-export const builderSetPackageModulesInWorkflow = createAction<boolean>(
-  "builder/set-package-modules-in-workflow"
-);
 
 export const builderBuildAsModule = createAction("builder/build-as-module");
 export const builderBuildAsWorkflow = createAction("builder/build-as-workflow");

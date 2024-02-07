@@ -436,7 +436,7 @@ const Build_RunWithDocker_SingleModuleWorkflow = async ({
     target_files.forEach((target_file) => {
       expect(fs.existsSync(target_file)).toBeFalsy();
     });
-    
+
     console.log("Assert that the packaged payload files do exist");
     const payload_files = payload_outfiles.map((outfile) => {
       return path.join(buildfolder, outfile);
