@@ -7,11 +7,6 @@ from unittest.mock import patch
 import pytest
 from unittest.mock import patch
 
-import pathlib
-import shutil
-import json
-from dataclasses import dataclass
-
 from builder.builder import Model
 from builder.builder import YAMLToConfig
 

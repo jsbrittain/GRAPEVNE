@@ -12,7 +12,6 @@ from typing import Optional
 from typing import Tuple
 from typing import TypedDict
 from typing import Union
-from typing import TypedDict
 
 import cachetools
 import requests
@@ -384,16 +383,18 @@ class Model:
             with open(blob_path, "w") as file:
                 file.write(response.text)
         # Redirect snakefile location in config
-        node.snakefile = str(pathlib.Path(
-            "modules",
-            m_repo_name,
-            "workflows",
-            m_project_foldername,
-            m_type_foldername,
-            m_modulename_foldername,
-            m_workflow_foldername,
-            "Snakefile",
-        ))
+        node.snakefile = str(
+            pathlib.Path(
+                "modules",
+                m_repo_name,
+                "workflows",
+                m_project_foldername,
+                m_type_foldername,
+                m_modulename_foldername,
+                m_workflow_foldername,
+                "Snakefile",
+            )
+        )
 
     def PackageModules(self, build_path: str) -> None:
         # Copy modules to the workflow directory
