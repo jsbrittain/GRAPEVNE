@@ -204,8 +204,10 @@ class Model:
         if len(module_output_namespaces) == 1:
             c["output_namespace"] = module_output_namespaces[0]
         else:
-            raise ValueError("Multiple output namespaces not currently supported. "
-                             f"Requested: {module_output_namespaces}")
+            raise ValueError(
+                "Multiple output namespaces not currently supported. "
+                f"Requested: {module_output_namespaces}"
+            )
         # Add configurations for each module
         for node in self.nodes:
             cnode = node.config.copy()

@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from unittest.mock import patch
 
 import pytest
-from unittest.mock import patch
 
 from builder.builder import Model
 from builder.builder import YAMLToConfig
