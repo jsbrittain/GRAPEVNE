@@ -566,13 +566,15 @@ describe("modules", () => {
   ])(
     "Build, extract zip, run in Docker: module '%s'",
     async (modulename, target_files, payload_files) => {
-      await Build_RunWithDocker_SingleModuleWorkflow({
-        driver: driver,
-        modulename: modulename,
-        target_outfiles: target_files,
-        payload_outfiles: payload_files,
-        expand_module: true,
-      });
+      await Build_RunWithDocker_SingleModuleWorkflow(
+        {
+          driver: driver,
+          modulename: modulename,
+          target_outfiles: target_files,
+          payload_outfiles: payload_files,
+          expand_module: true,
+        }
+      );
     },
     20 * ONE_MINUTE,
   ); // long timeout
@@ -610,13 +612,15 @@ describe("modules", () => {
       await driver.findElement(By.id("btnSidenavBuilder")).click();
 
       // Build and run workflow
-      await Build_RunWithDocker_SingleModuleWorkflow({
-        driver: driver,
-        modulename: modulename,
-        target_outfiles: target_files,
-        payload_outfiles: payload_files,
-        expand_module: false,
-      });
+      await Build_RunWithDocker_SingleModuleWorkflow(
+        {
+          driver: driver,
+          modulename: modulename,
+          target_outfiles: target_files,
+          payload_outfiles: payload_files,
+          expand_module: false,
+        }
+      );
 
       // Unset workflow packaging option
       await driver.findElement(By.id("btnSidenavSettings")).click();

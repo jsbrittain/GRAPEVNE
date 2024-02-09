@@ -5,6 +5,12 @@ from dataclasses import dataclass
 from unittest.mock import patch
 
 import pytest
+from unittest.mock import patch
+
+import pathlib
+import shutil
+import json
+from dataclasses import dataclass
 
 from builder.builder import Model
 from builder.builder import YAMLToConfig
@@ -319,7 +325,7 @@ def test_PackageModule_Remote():
                     "branch": "main",
                     "path": "workflows/Utility/modules/touch/workflow/Snakefile",
                 },
-            }
+            },
         },
     )
     build_path = "test_build_path_remote"
